@@ -1,0 +1,42 @@
+##Run postgresql as Docker
+docker run -it \
+-e POSTGRES_USER="root" \
+-e POSTGRES_PASSWORD="root" \
+-e POSTGRES_DB="ny_taxi" \
+-v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+-p 5432:5432 \
+postgres:13
+
+## Run pgadmin as docker
+docker run -it \
+-e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+-e PGADMIN_DEFAULT_PASSWORD="root" \
+-p 8080:80 \
+dpage/pgadmin4
+
+## Docker network
+## The docker images running within same network can access each other 
+## as applications ruuning on local machine
+docker network create <name of network>
+
+## Run the postgresql with same network as pg admin so that pg admin can connect to it
+## give a name to postgresql docker container
+docker run -it \
+-e POSTGRES_USER="root" \
+-e POSTGRES_PASSWORD="root" \
+-e POSTGRES_DB="ny_taxi" \
+-v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+-p 5432:5432 \
+--network=pg-network \
+--name pg-database \
+postgres:13
+
+##pgadmin to connect to docker running in same network
+##While connecting name of DB to be used : as given in the 'name' of postgresql run 
+docker run -it \
+-e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+-e PGADMIN_DEFAULT_PASSWORD="root" \
+-p 8080:80 \
+--network=pg-network\
+dpage/pgadmin4
+
