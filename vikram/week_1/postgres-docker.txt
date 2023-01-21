@@ -53,3 +53,14 @@ python Ingest-NY-Data.py \
 --table_name=yellow_taxi_data \
 --url=${URL}
 
+docker run -it \
+--network=pg-network1 \
+ing:v01 \
+--user=root \
+--password=root \
+--host=localhost \
+--port=5432 \
+--db=ny_taxi \
+--table_name=yellow_taxi_data \
+--url=${URL}
+

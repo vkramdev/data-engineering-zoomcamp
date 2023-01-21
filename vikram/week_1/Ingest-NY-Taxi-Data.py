@@ -51,4 +51,3 @@ parser.add_argument('--table_name',help='table to connect to')
 parser.add_argument('--url', help='url to connect')
 
 args=parser.parse_args()
-print(args.accumulate(args.integers))
